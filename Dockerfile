@@ -96,14 +96,22 @@ RUN ARCH=$(uname -m) && \
     chmod +x /usr/local/bin/code
 
 # Install Node.js and npm for Claude Code CLI
-RUN ARCH=$(dpkg --print-architecture) && \
+RUN ARCH=$(uname -m) && \
     NODE_VERSION=20.11.0 && \
-    wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${ARCH}.tar.xz && \
-    tar -xJf node-v${NODE_VERSION}-linux-${ARCH}.tar.xz -C /usr/local --strip-components=1 && \
-    rm node-v${NODE_VERSION}-linux-${ARCH}.tar.xz
+    if [ "$ARCH" = "x86_64" ]; then \
+        NODE_ARCH="x64"; \
+    elif [ "$ARCH" = "aarch64" ]; then \
+        NODE_ARCH="arm64"; \
+    else \
+        echo "Unsupported architecture: $ARCH" && exit 1; \
+    fi && \
+    wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.xz && \
+    tar -xJf node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.xz -C /usr/local --strip-components=1 && \
+    rm node-v${NODE_VERSION}-linux-${NODE_ARCH}.tar.xz
 
 # Install Claude Code CLI
-RUN npm install -g @anthropic-ai/claude
+RUN npm install -g @anthropic-ai/claude && \
+    npm cache clean --force
 
 # Install Docker (Todo)
 # RUN apt-get update && \
