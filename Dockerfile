@@ -95,8 +95,9 @@ RUN ARCH=$(uname -m) && \
 
 # Install kubectl
 RUN ARCH=$(dpkg --print-architecture) && \
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${ARCH}/kubectl" && \
-    curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/${ARCH}/kubectl.sha256" && \
+    VERSION=$(curl -L -s https://dl.k8s.io/release/stable.txt) && \
+    curl -LO "https://dl.k8s.io/release/${VERSION}/bin/linux/${ARCH}/kubectl" && \
+    curl -LO "https://dl.k8s.io/release/${VERSION}/bin/linux/${ARCH}/kubectl.sha256" && \
     echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check && \
     install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
     rm kubectl kubectl.sha256
