@@ -24,6 +24,7 @@ This project provides a containerized development environment built on Debian Bo
   - Go (version 1.25.3)
   - go-swagger (v0.31.0) for API development
   - Visual Studio Code CLI for remote development
+  - Claude Code CLI for AI-powered coding assistance
   - PostgreSQL client (psql) for database management
   - VS Code Extensions (automatically installed):
     - GitLens (eamodio.gitlens)
