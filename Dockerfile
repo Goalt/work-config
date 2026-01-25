@@ -95,19 +95,15 @@ RUN ARCH=$(uname -m) && \
     rm vscode_cli.tar.gz && \
     chmod +x /usr/local/bin/code
 
+# Install Node.js and npm for Claude Code CLI
+RUN ARCH=$(dpkg --print-architecture) && \
+    NODE_VERSION=20.11.0 && \
+    wget https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${ARCH}.tar.xz && \
+    tar -xJf node-v${NODE_VERSION}-linux-${ARCH}.tar.xz -C /usr/local --strip-components=1 && \
+    rm node-v${NODE_VERSION}-linux-${ARCH}.tar.xz
+
 # Install Claude Code CLI
-RUN ARCH=$(uname -m) && \
-    if [ "$ARCH" = "x86_64" ]; then \
-        CLAUDE_ARCH="x86_64"; \
-    elif [ "$ARCH" = "aarch64" ]; then \
-        CLAUDE_ARCH="aarch64"; \
-    else \
-        echo "Unsupported architecture: $ARCH" && exit 1; \
-    fi && \
-    curl -o claude_code_installer.sh "https://storage.googleapis.com/osprey-downloads-c02f6a0d-347c-492b-a752-3e0651722e97/claude-desktop-linux-${CLAUDE_ARCH}-latest/claude_installer_${CLAUDE_ARCH}.sh" && \
-    chmod +x claude_code_installer.sh && \
-    ./claude_code_installer.sh && \
-    rm claude_code_installer.sh
+RUN npm install -g @anthropic-ai/claude
 
 # Install Docker (Todo)
 # RUN apt-get update && \

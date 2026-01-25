@@ -22,6 +22,7 @@ This project provides a containerized development environment built on Debian Bo
 - **Development Tools**
   - Git version control
   - Go (version 1.25.3)
+  - Node.js (version 20.11.0) with npm
   - go-swagger (v0.31.0) for API development
   - Visual Studio Code CLI for remote development
   - Claude Code CLI for AI-powered coding assistance
