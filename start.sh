@@ -226,6 +226,7 @@ install_vscode_extensions() {
     "tooltitudeteam.tooltitude"
     "766b.go-outliner"
     "github.copilot-workspace"
+    "saoudrizwan.claude-dev"
   )
 
   local target_users=()

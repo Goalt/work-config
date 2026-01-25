@@ -29,6 +29,7 @@ This project provides a containerized development environment built on Debian Bo
     - GitLens (eamodio.gitlens)
     - GitHub Copilot (GitHub.copilot)
     - GitHub Copilot Workspace (github.copilot-workspace)
+    - Claude Dev (saoudrizwan.claude-dev)
     - SQLTools (mtxr.sqltools)
     - SQLTools MySQL Driver (mtxr.sqltools-driver-mysql)
     - SQLTools PostgreSQL Driver (mtxr.sqltools-driver-pg)
