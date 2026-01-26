@@ -117,6 +117,8 @@ RUN mkdir -p /var/run/sshd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
+RUN curl -fsSL https://claude.ai/install.sh | bash
+
 # Expose SSH port
 EXPOSE 22
 
