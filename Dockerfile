@@ -67,7 +67,7 @@ RUN ARCH=$(dpkg --print-architecture) && \
     wget https://go.dev/dl/go${GO_VERSION}.linux-${ARCH}.tar.gz && \
     tar -C /usr/local -xzf go${GO_VERSION}.linux-${ARCH}.tar.gz && \
     rm go${GO_VERSION}.linux-${ARCH}.tar.gz
-ENV PATH="/usr/local/go/bin:${PATH}"
+ENV PATH="/usr/local/go/bin:/root/.local/bin:${PATH}"
 
 # Install go-swagger
 RUN ARCH=$(uname -m) && \
