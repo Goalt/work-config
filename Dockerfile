@@ -17,7 +17,6 @@ RUN apt-get update && \
     unzip \
     jq \
     postgresql-client \
-    openssh-server \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -112,11 +111,6 @@ RUN ARCH=$(uname -m) && \
 #     && apt-get clean \
 #     && rm -rf /var/lib/apt/lists/*
 
-# Configure SSH server
-RUN mkdir -p /var/run/sshd && \
-    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
-
 RUN curl -fsSL https://claude.ai/install.sh | bash
 
 # Install kubectl
@@ -139,9 +133,6 @@ RUN curl -sSL https://ngrok-agent.s3.amazonaws.com/ngrok.asc \
   | sudo tee /etc/apt/sources.list.d/ngrok.list \
   && sudo apt update \
   && sudo apt install ngrok
-
-# Expose SSH port
-EXPOSE 22
 
 # Add start script into the image
 COPY start.sh /usr/local/bin/container-start.sh

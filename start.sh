@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 # Post-login setup script
-# - Start SSH server
 # - Start D-Bus if available
 # - Set DNS resolver to Google DNS (8.8.8.8)
 # - Append OpenVPN3 helper aliases to the user's ~/.bashrc
@@ -21,32 +20,6 @@ warn() {
 
 is_root() {
   [ "${EUID:-$(id -u)}" -eq 0 ]
-}
-
-# 1) Start SSH server
-start_ssh() {
-  if command -v sshd >/dev/null 2>&1; then
-    if is_root; then
-      # Create privilege separation directory if it doesn't exist
-      mkdir -p /run/sshd
-      
-      # Check if SSH server is already running
-      if pgrep -x sshd >/dev/null 2>&1; then
-        log "SSH server is already running"
-      else
-        # Start SSH server
-        if /usr/sbin/sshd; then
-          log "SSH server started successfully"
-        else
-          warn "Failed to start SSH server; continuing"
-        fi
-      fi
-    else
-      warn "Not root; cannot start SSH server"
-    fi
-  else
-    warn "SSH server not installed; skipping"
-  fi
 }
 
 # 2) Start dbus if possible
@@ -295,7 +268,6 @@ install_vscode_extensions() {
 }
 
 main() {
-  start_ssh
   start_dbus
   set_dns
   append_aliases
